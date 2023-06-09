@@ -1,11 +1,16 @@
 package dominio;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+=======
+import java.util.List;
+>>>>>>> 20c16b983f9251e37110ee624f0117662d4ab184
 
 
 
 public class Bank {
+<<<<<<< HEAD
   public static List<Customers> customers = new ArrayList<>(); ;
   private String address= "Road : Diagon Alley" ;
   private PersonType personType = PersonType.LEGAL_PERSON;
@@ -57,6 +62,15 @@ public class Bank {
     
   
     public static void ShowCustomers(){
+=======
+  public List<Customers> customers ;
+  private String address= "Road : Diagon Alley" ;
+  private PersonType personType = PersonType.LEGAL_PERSON;
+  private String name = "Bank center";
+    
+  
+    public void ShowCustomers(){
+>>>>>>> 20c16b983f9251e37110ee624f0117662d4ab184
         
         for (Customers client : customers) {
             System.out.println(client);
@@ -80,6 +94,7 @@ public class Bank {
       return name;
   }
 
+<<<<<<< HEAD
   public static  void menu(){
 
     Scanner scan = new Scanner(System.in);
@@ -115,4 +130,6 @@ public class Bank {
 
   }
 
+=======
+>>>>>>> 20c16b983f9251e37110ee624f0117662d4ab184
 }

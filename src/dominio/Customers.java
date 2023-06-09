@@ -5,7 +5,11 @@ package dominio;
 public class Customers  extends Person implements Comparable<Customers>{
   private BankAccount bankAccount;
   
+<<<<<<< HEAD
   public Customers(String name, String cpf, int age, String road, int house, PersonType personType) {
+=======
+  public Customers(String name, String cpf, int age, String road, int house, PersonType personType,BankAccount bankAccount) {
+>>>>>>> 20c16b983f9251e37110ee624f0117662d4ab184
 
     super(name, cpf, age, road, house, personType);
     
@@ -52,6 +56,9 @@ public class Customers  extends Person implements Comparable<Customers>{
       
     }
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> 20c16b983f9251e37110ee624f0117662d4ab184
     
 }

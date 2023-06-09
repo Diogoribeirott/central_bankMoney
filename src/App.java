@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,3 +24,11 @@ public class App {
     }
 }
 //
+=======
+public class App {
+    public static void main(String[] args) throws Exception {
+        System.out.println("Hello, World!");
+        
+    }
+}
+>>>>>>> 20c16b983f9251e37110ee624f0117662d4ab184
