@@ -9,55 +9,66 @@ import java.util.function.Predicate;
 
 public class Bank  {
   
-  public  List<Customers> customers = new ArrayList<>();
-  private String address= "Road : Diagon Alley" ;
+  private List<Customers> customers = new ArrayList<>();
+  // -> deixei como private por não ser utilizada fora da classe.
+  private static final String ADDRESS = "Road : Diagon Alley" ;
+  private static final String NAME = "Bank center";
+  // -> como essas variáveis não serão alteradas, pode-se utilizar o *static final* demonstrando ser constante e o static para não duplicar esses elementos quando instanciar um novo objeto.
   private PersonType personType = PersonType.LEGAL_PERSON;
-  private  String name = "Bank center";
-  
+
   @Override
   public String toString() {
     
-    return "Bank :" +name+ "\n"+
-    "Address: "+address ;
+    return String.format("Bank: %s %nAddress: %s", NAME, ADDRESS);
+            //"Bank :" +name+ "\n"+"Address: "+address;
   }
 
     public void setCustomers(List<Customers> customers) {
         this.customers=customers;
-    }
-    
+    } // -> como a lista é publica não precisa de um setter pra ela
+
     public String getAddress() {
-      return address;
+      return ADDRESS;
     }
 
-     public PersonType getPersonType() {
+    public PersonType getPersonType() {
       return personType;
     }
 
     public String getName() {
-      return name;
+      return NAME;
     }
     
 
 
-  public  void ShowCustomers(){
-        
-        for (Customers client : this.customers) {
-            System.out.println(client);
-            System.out.println("-----------------------");
-        }
+  public void ShowCustomers(){
+//        for (Customers client : this.customers) {
+//            System.out.println(client);
+//            System.out.println("-----------------------");
+//        }
+      customers.forEach(client -> System.out.println(client + "\n-----------------------"));
+      // -> sugestão
+
   }
-  public Optional<Customers> findCustomerByCPF(String cpf){
-  return findCustomres(customer -> customer.getCpf().equals(cpf));
-  }
-  public Optional<Customers>  findCustomres(Predicate<Customers> precidate){
-    Customers client = null;
-    for (Customers customer : customers) {
-      if(precidate.test(customer)){
-        client =customer;
-      }  
+//  public Optional<Customers> findCustomerByCPF(String cpf){
+//
+//  return findCustomers(customer -> customer.getCpf().equals(cpf));
+//  }
+
+//  public Optional<Customers> findCustomers(Predicate<Customers> precidate){
+//    Customers client = null;
+//    for (Customers customer : customers) {
+//      if(precidate.test(customer)){
+//        client =customer;
+//      }
+//    }
+//    return Optional.ofNullable(client);
+//  }
+
+    public List<Customers> findCustomerByCPF(String cpf){
+        return customers.stream().filter(customer -> customer.getCpf().equals(cpf)).toList();
+        // -> sugestão
     }
-    return Optional.ofNullable(client);
-  }
 
 /**
  * 
@@ -66,8 +77,9 @@ public  void menu(){
 
     try (Scanner scan = new Scanner(System.in)) {
       int opcao;
+
       do{
-          System.out.println("BANK: "+name+
+          System.out.println("BANK: "+ NAME +
           "\n--------------Menu-------------"+
           "\n1-Show Customers"+
           "\n2-Create Customer"+
@@ -75,22 +87,20 @@ public  void menu(){
           "\n4-Exit");
           opcao=scan.nextInt();
       switch(opcao){
-          case 1:
-          ShowCustomers();
-          break;
-          case 2:
-         Customers x=Customers.CreateCustomers();
-         customers.add(x);
-          break;
-          case 3:
-          System.out.println("Type CPF:");
-         String cpf = scan.next();
-         System.out.println(findCustomerByCPF(cpf).orElseThrow(() ->new IllegalArgumentException("This customer is not registered in our database")));
-          break;
-          case 4:
-          System.out.println("Closing Bank");
-          break;
-
+          case 1 -> ShowCustomers();
+          case 2 -> {
+              Customers x = Customers.CreateCustomers();
+              customers.add(x);
+          }
+          case 3 -> {
+              System.out.println("Type CPF:");
+              String cpf = scan.next();
+              List<Customers> filteredCustomers = findCustomerByCPF(cpf);
+              if (filteredCustomers.isEmpty()) throw new IllegalArgumentException("This customer is not registered in our database");
+              else System.out.println(findCustomerByCPF(cpf));
+          }
+          case 4 -> System.out.println("Closing Bank");
+          default -> System.out.println("Digite um valor válido");
       }
 
       }while(opcao!=4);
@@ -98,8 +108,6 @@ public  void menu(){
     }catch (IllegalArgumentException e) {
       e.printStackTrace();
       System.out.println("ERRO VALOR DE ENTRADA INVALIDA:" + e.getMessage());
-      
-     
     }
   
   }

@@ -10,7 +10,6 @@ public class BankAccount {
 
   @Override
   public String toString() {
-    
     return "Bank Number: "+BankNumber +" \n"+
     "type:"+accountType+
     "\nbalance: "+BankBalance;
