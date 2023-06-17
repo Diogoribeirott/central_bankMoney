@@ -2,106 +2,115 @@ package dominio;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
 
-public class Bank  {
-  
-  public  List<Customers> customers = new ArrayList<>();
-  private String address= "Road : Diagon Alley" ;
-  private PersonType personType = PersonType.LEGAL_PERSON;
-  private  String name = "Bank center";
-  
-  @Override
-  public String toString() {
-    
-    return "Bank :" +name+ "\n"+
-    "Address: "+address ;
-  }
+public class Bank {
 
-    public void setCustomers(List<Customers> customers) {
-        this.customers=customers;
+    private final String name;
+    private final String address;
+    private final PersonType personType;
+    public List<Customer> customers;
+
+    public Bank(String address, PersonType personType, String name) {
+        this.customers = new ArrayList<>();
+        this.address = address;
+        this.personType = personType;
+        this.name = name;
     }
-    
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
     public String getAddress() {
-      return address;
+        return address;
     }
 
-     public PersonType getPersonType() {
-      return personType;
+    public PersonType getPersonType() {
+        return personType;
     }
 
     public String getName() {
-      return name;
+        return name;
     }
-    
 
+    public Customer findCustomerByCPF(String cpf) {
+        return findCustomers(c -> c.getCpf().equals(cpf));
+    }
 
-  public  void ShowCustomers(){
-        
-        for (Customers client : this.customers) {
-            System.out.println(client);
-            System.out.println("-----------------------");
+    private Customer findCustomers(Predicate<Customer> predicate) {
+        Customer client = null;
+
+        for (Customer customer : customers) {
+            if (predicate.test(customer)) {
+                client = customer;
+            }
         }
-  }
-  public Optional<Customers> findCustomerByCPF(String cpf){
-  return findCustomres(customer -> customer.getCpf().equals(cpf));
-  }
-  public Optional<Customers>  findCustomres(Predicate<Customers> precidate){
-    Customers client = null;
-    for (Customers customer : customers) {
-      if(precidate.test(customer)){
-        client =customer;
-      }  
+
+        return client;
     }
-    return Optional.ofNullable(client);
-  }
 
-/**
- * 
- */
-public  void menu(){
+    public void deleteCustomer(String cpf) {
+        Customer customerFound = findCustomerByCPF(cpf);
 
-    try (Scanner scan = new Scanner(System.in)) {
-      int opcao;
-      do{
-          System.out.println("BANK: "+name+
-          "\n--------------Menu-------------"+
-          "\n1-Show Customers"+
-          "\n2-Create Customer"+
-          "\n3-Find Customer"+
-          "\n4-Exit");
-          opcao=scan.nextInt();
-      switch(opcao){
-          case 1:
-          ShowCustomers();
-          break;
-          case 2:
-         Customers x=Customers.CreateCustomers();
-         customers.add(x);
-          break;
-          case 3:
-          System.out.println("Type CPF:");
-         String cpf = scan.next();
-         System.out.println(findCustomerByCPF(cpf).orElseThrow(() ->new IllegalArgumentException("This customer is not registered in our database")));
-          break;
-          case 4:
-          System.out.println("Closing Bank");
-          break;
-
-      }
-
-      }while(opcao!=4);
-
-    }catch (IllegalArgumentException e) {
-      e.printStackTrace();
-      System.out.println("ERRO VALOR DE ENTRADA INVALIDA:" + e.getMessage());
-      
-     
+        customers.remove(customerFound);
     }
-  
-  }
+
+    public void menu() {
+
+        try (Scanner scan = new Scanner(System.in)) {
+
+            int opcao;
+
+            do {
+                System.out.println("BANK: " + name +
+                        "\n--------------Menu-------------" +
+                        "\n1-Show Customers" +
+                        "\n2-Create Customer" +
+                        "\n3-Find Customer" +
+                        "\n4-Exit");
+                opcao = scan.nextInt();
+                switch (opcao) {
+                    case 1:
+                        customers.forEach(System.out::println);
+                        break;
+                    case 2:
+                        Customer createdCustomer = Customer.CreateCustomers(customers);
+                        customers.add(createdCustomer);
+                        break;
+                    case 3:
+                        System.out.println("Type CPF:");
+                        Customer customerByCPF = findCustomerByCPF(scan.next());
+
+                        if (customerByCPF == null){
+                            System.out.println("Customer Doesn't Exist");
+                            break;
+                        }
+
+                        System.out.println(customerByCPF);
+
+                        break;
+                    case 4:
+                        System.out.println("Closing Bank");
+                        break;
+                }
+
+            } while (opcao != 4);
+
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            System.out.println("Error, Invalid input type: " + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        return "Bank :" + name + "\n" +
+                "Address: " + address +
+                "Type: " + address;
+    }
 
 }

@@ -5,9 +5,7 @@ import dominio.BankAccount;
 
 public class testAll {
     public static void main(String[] args) {
-      BankAccount conta = new BankAccount(AccountType.SAVINGS_ACCOUNT, null);
-      System.out.println(conta);
+      System.out.println(new BankAccount(AccountType.SAVINGS_ACCOUNT, null));
     }
 
-  
 }
