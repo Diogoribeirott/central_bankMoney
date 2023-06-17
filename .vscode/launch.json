@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "App",
+      "request": "launch",
+      "mainClass": "App",
+      "projectName": "Banco_fe5ef617"
+    },
+    {
+      "type": "java",
+      "name": "testAll",
+      "request": "launch",
+      "mainClass": "test.testAll",
+      "projectName": "Banco_6aa808ce"
+    },
+    {
+      "type": "java",
       "name": "Current File",
       "request": "launch",
       "mainClass": "${file}"

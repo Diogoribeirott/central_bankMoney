@@ -1,16 +1,21 @@
 package dominio;
 
+import java.util.Scanner;
+
 public class BankAccount {
   private AccountType accountType;
   private Long BankBalance;
-  private Long BankNumber;
+  private Long BankNumber = 208l;
   
+
   @Override
   public String toString() {
     
     return "Bank Number: "+BankNumber +" \n"+
-    "balance: "+BankBalance;
+    "type:"+accountType+
+    "\nbalance: "+BankBalance;
   }
+
 
   public BankAccount(AccountType accountType, Long BankNumber){
     this.accountType = accountType;
@@ -24,6 +29,26 @@ public class BankAccount {
       System.out.println("Balance: "+BankBalance); 
     }
     this.BankNumber = BankNumber;
+  }
+  
+  
+
+  public static BankAccount  createTypeBankAccount(){
+    Scanner bankScanner = new Scanner(System.in);
+    BankAccount bankAccount;
+   
+     System.out.println(" ACCOUNT: ENTER 1 FOR CURRENT 2 FOR SAVINGS");
+    String y = bankScanner.nextLine();
+
+    if(y.equals("1")){
+     bankAccount = new BankAccount(AccountType.SAVINGS_ACCOUNT, null);
+     
+    }else{
+      bankAccount = new BankAccount(AccountType.CURRENT_ACCOUNT, null);
+    }
+
+    bankAccount.BankNumber = 280l;
+    return bankAccount;
   }
    
     

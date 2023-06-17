@@ -1,6 +1,6 @@
 package dominio;
 
-
+import java.util.Scanner;
 
 abstract class Person extends Address {
   protected String name;
@@ -71,4 +71,23 @@ abstract class Person extends Address {
         this.personType = personType;
     }
 
+    public static PersonType CreatePersonType(){
+    Scanner personScanner = new Scanner(System.in); 
+
+    System.out.println("Are you an individual or legal entity? 1)LEGAL PERSON 2)PYSICAL PERSON");
+    String x =personScanner.nextLine();
+    PersonType personTypeCustormes;
+    
+    if(x.equals("1")){
+        personTypeCustormes=PersonType.LEGAL_PERSON;
+
+    }else if(x.equals("2")){
+        personTypeCustormes=PersonType.PHYSICAL_PERSON;
+    }else{
+        personTypeCustormes=PersonType.UNDEFINER;
+    }
+    
+    return personTypeCustormes;
+    }
+    
 }
