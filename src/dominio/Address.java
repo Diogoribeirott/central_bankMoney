@@ -1,13 +1,14 @@
 package dominio;
 
 abstract class Address {
-  protected String road;
-  protected int house;
+
+     protected String road;
+     protected int house;
 
   
     public Address(String road,int house){
-      this.road = road;
-      this.house = house;
+        this.road = road;
+        this.house = house;
 
     }
 
